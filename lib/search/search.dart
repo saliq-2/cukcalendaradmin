@@ -38,24 +38,26 @@ class _FirebaseSearchScreenState extends State<FirebaseSearchScreen> {
         title: const Text("Firebase Search"),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Center(
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Search Here",
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(11),
                 ),
-                onChanged: (query) {
-                  if (query.isEmpty) {
-                    clearSearch(); // Clear the list when the search query is empty
-                  } else {
-                    searchFromFirebase(query);
-                  }
-                },
+                hintText: "Search Here",
               ),
+              onChanged: (query) {
+                if (query.isEmpty) {
+                  clearSearch(); // Clear the list when the search query is empty
+                } else {
+                  query=query.toString();
+                  query=query.toLowerCase();
+                  searchFromFirebase(query);
+                }
+              },
             ),
           ),
           if (searchResult.isNotEmpty)

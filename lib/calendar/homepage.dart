@@ -77,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
             margin: EdgeInsets.all(8),
             clipBehavior: Clip.antiAlias,
             child: TableCalendar(
+              formatAnimationCurve: Curves.easeIn,
 
               headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true,
               decoration: BoxDecoration(

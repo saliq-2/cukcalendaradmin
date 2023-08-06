@@ -20,7 +20,7 @@ class _splash_screenState extends State<splash_screen> {
     super.initState();
     Timer(Duration(seconds: 3), () {
 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProvidedStylesExample()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>selector_page()));
     });
   }
   @override
