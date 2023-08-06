@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "909432165261",
+    "project_id": "cukashmir-23c02",
+    "storage_bucket": "cukashmir-23c02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909432165261:android:134bcd7158f61d90dae3c4",
+        "android_client_info": {
+          "package_name": "com.example.cuk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "909432165261-c8cq319me57f79gmhr4dse775mo8oc3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzQO_sgx0qMrxPZ3whVS5BKKj8sgwgRUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "909432165261-c8cq319me57f79gmhr4dse775mo8oc3h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "909432165261-531f3nufd2f9sg79slslpm5okma521bg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cuk"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
