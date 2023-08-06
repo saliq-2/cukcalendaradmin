@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'event.dart';
 import 'add_event.dart';
-import 'edit_events.dart';
 import 'event_item.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -78,12 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
             clipBehavior: Clip.antiAlias,
             child: TableCalendar(
               formatAnimationCurve: Curves.easeIn,
-
-              headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true,
-              decoration: BoxDecoration(
-                color: Colors.green
-              )
-
+              headerStyle: const HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+                decoration: BoxDecoration(color: Colors.green),
               ),
               eventLoader: _getEventsForTheDay,
               calendarFormat: _calendarFormat,
@@ -109,71 +106,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               calendarStyle: const CalendarStyle(
-                rowDecoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(width: 1,color: Colors.green)
-                  )
-                ),
-
+                rowDecoration: BoxDecoration(border: Border(top: BorderSide(width: 1, color: Colors.green))),
                 weekendTextStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 selectedDecoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
               ),
             ),
           ),
-          Text("*Mulsim Holidays are subject to the appearance of moon"),
+          Text("*Muslim Holidays are subject to the appearance of the moon"),
           ..._getEventsForTheDay(_selectedDay).map(
                 (event) => EventItem(
-                event: event,
-                onTap: () async {
-                  final res = await Navigator.push<bool>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => EditEvent(
-                          firstDate: _firstDay,
-                          lastDate: _lastDay,
-                          event: event),
-                    ),
-                  );
-                  if (res ?? false) {
-                    _loadFirestoreEvents();
-                  }
-                },
-                onDelete: () async {
-                  final delete = await showDialog<bool>(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: const Text("Delete Event?"),
-                      content: const Text("Are you sure you want to delete?"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, false),
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.black,
-                          ),
-                          child: const Text("No"),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, true),
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.red,
-                          ),
-                          child: const Text("Yes"),
-                        ),
-                      ],
-                    ),
-                  );
-                  if (delete ?? false) {
-                    await FirebaseFirestore.instance
-                        .collection('events')
-                        .doc(event.id)
-                        .delete();
-                    _loadFirestoreEvents();
-                  }
-                }
+              event: event,
+
             ),
           ),
-
-
           Expanded(
             child: ListView.builder(
               itemCount: _events.length,
@@ -183,55 +128,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 return ExpansionTile(
                   title: Text(
                     "${day.day}/${day.month}/${day.year}",
-                    style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                   children: eventsForTheDay.map((event) {
                     return EventItem(
                       event: event,
-                      onTap: () async {
-                        final res = await Navigator.push<bool>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => EditEvent(
-                              firstDate: _firstDay,
-                              lastDate: _lastDay,
-                              event: event,
-                            ),
-                          ),
-                        );
-                        if (res ?? false) {
-                          _loadFirestoreEvents();
-                        }
-                      },
-                      onDelete: () async {
-                        final delete = await showDialog<bool>(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            title: const Text("Delete Event?"),
-                            content: const Text("Are you sure you want to delete?"),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, false),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                ),
-                                child: const Text("No"),
-                              ),
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, true),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.red,
-                                ),
-                                child: const Text("Yes"),
-                              ),
-                            ],
-                          ),
-                        );
-                        if (delete ?? false) {
-                          await FirebaseFirestore.instance.collection('events').doc(event.id).delete();
-                          _loadFirestoreEvents();
-                        }
-                      },
+
                     );
                   }).toList(),
                 );
@@ -239,27 +141,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 100),
-        child: FloatingActionButton(
-          onPressed: () async {
-            final result = await Navigator.push<bool>(
-              context,
-              MaterialPageRoute(
-                builder: (_) => AddEvent(
-                  firstDate: _firstDay,
-                  lastDate: _lastDay,
-                  selectedDate: _selectedDay,
-                ),
-              ),
-            );
-            if (result ?? false) {
-              _loadFirestoreEvents();
-            }
-          },
-          child: const Icon(Icons.add),
-        ),
       ),
     );
   }
