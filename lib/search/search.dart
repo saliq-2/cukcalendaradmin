@@ -35,7 +35,7 @@ class _FirebaseSearchScreenState extends State<FirebaseSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Firebase Search"),
+        title: const Text("Search Faculty name"),
       ),
       body: Column(
 

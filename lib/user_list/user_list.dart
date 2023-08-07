@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cuk/dept_model/dept_model.dart';
 import 'package:cuk/user_info/user_info.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class user_list extends StatefulWidget
 {
@@ -9,28 +11,16 @@ class user_list extends StatefulWidget
   @override
   State<user_list> createState() => _user_listState();
 }
+final Uri _url = Uri.parse('https://flutter.dev');
 
 class _user_listState extends State<user_list> {
 
-  List<String> dept_names=[
-    "School of Engineering and Technology",
-    "School of physical and Chemical Sciences",
-    "School of Life Sciences",
-    "School of Social Sciences",
 
-  "School of Education",
-    "School of languages",
-    "School of Media Studies",
-    "School of Legal Studies",""
-        "School of Business Studies",
-
-
-  ];
 
 
   //Dashboard
 
-  List<String> dashboard=["Departments","Admissions","Results","Courses","Announcements","Locate Us"];
+  List<String> dashboard=["Departments","Admissions","Results","Courses"];
   List<String> dashboard_images=[
     "assets/images/dashboard/department.png",
     "assets/images/dashboard/admiss.png",
@@ -45,111 +35,28 @@ class _user_listState extends State<user_list> {
   ];
   List <Map<String,dynamic>> faculty=[
     //It
-    {
-      "name":"Afaq Alam",
-        "phone":"9469054115",
-      "dept":"it",
-    },
-    {
-      "name":"Amjad Hussain",
-      "phone":"23452112",
-      "dept":"it",
-    },
-    {
-      "name":"Zahoor Najar",
-      "phone":"9419505159",
-      "dept":"it",
-    },
-    {
-      "name":"Sheikh Riyaz",
-      "phone":"92939102",
-      "dept":"it",
-    },
-    {
-      "name":"Yash Paul",
-      "phone":"9622603978",
-      "dept":"it",
-    },
-    //Maths
-    {
-      "name":"Wali Mohammad Shah",
-      "phone":"9419501164",
-      "dept":"MAths",
-    },
-    {
-      "name":"Dr Aftab Hussain Shah",
-      "phone":"7006579471",
-      "dept":"MAths",
-    },
 
-    {
-      "name":"Ghulam Mohammad Sofi",
-      "phone":"9906711572",
-      "dept":"MAths",
-    },
-
-    {
-      "name":"Shabbir Ahmad Ahanger",
-      "phone":"9906966500",
-      "dept":"Maths",
-    },
-
-    {
-      "name":"Nitin Ambadas Katake",
-      "phone":"9469133517",
-      "dept":"MAths",
-    },
 
 
 
 
   ];
-  List<Map<String,dynamic>> _foundfaculty=[];
+
+
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _foundfaculty=[];
-  }
-  void _runFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
 
-    if (enteredKeyword.isEmpty) {
 
-      results = faculty;
-
-    }
-    else {
-      results = faculty
-          .where((user) => user['name'].toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
-    }
-    setState((){
-      _foundfaculty=results;
-    });
-  }
 
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      drawer: Drawer(
-        width: MediaQuery.of(context).size.width*0.5,
 
-        child: Column(
-          children: [
-            DrawerHeader(child: CircleAvatar()),
-            ListTile(
-              tileColor: Colors.blue,
-            )
-          ],
-        ),
-      ),
 
       appBar: AppBar(
 
-        backgroundColor: Colors.deepPurple.shade400,
+        backgroundColor: Colors.green,
         centerTitle: true,
         title: Text("CUK"),
       ),
@@ -162,58 +69,9 @@ class _user_listState extends State<user_list> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 50,
 
-                        width: 400,
-                        child: TextField(
-                          autocorrect: false,
-                          onChanged: (value)=>_runFilter(value),
-                          decoration: InputDecoration(
-
-                            label: Text("Enter Faculty name"),
-                            hintText: "Search For Faculty",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(21),
-
-                            )
-                          ),
-
-                        )),
-                  ),
                   SizedBox(height: 20,),
-                  Container(
-                    height: 50,
-                    child: _foundfaculty.isNotEmpty
-                        ? ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (context, index) => Card(
-                        elevation: 1,
-                        margin: const EdgeInsets.symmetric(vertical: 2),
-                        child: InkWell(
-                          onTap: ()
-                          {
 
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>user_info(obj: _foundfaculty[index])));
-                          },
-
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              radius: 10.0,
-                            ),
-                            title: Text(_foundfaculty[index]['name']),
-                            // subtitle: Text('${_foundfaculty[index]["phone"]}'),
-                          ),
-                        ),
-                      ),
-                    )
-                        : const Text(
-                      "",
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
                   CarouselSlider(items: [
 
                     Padding(
@@ -292,9 +150,29 @@ class _user_listState extends State<user_list> {
 
 
 
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>dept_model()));
-                                          },child: Text("View All",style: TextStyle(color: Colors.purple.shade400),)),
+                                          onTap:(){
+                                            // Link(
+                                            //     uri: Uri.parse(
+                                            //     'https://docs.google.com/forms/d/e/1FAIpQLSd15Ds0dIBeqGPQVxJ09y5rnHn1dlFvAM2dOchSfBWKsoYdVQ/viewform'),
+                                            // target: LinkTarget.blank,
+                                            // builder: (BuildContext context, FollowLink? openLink){
+                                            //
+                                            //       return IconButton(onPressed:(){
+                                            //         openLink;
+                                            //         openLink?.call();
+                                            //       }
+                                            //
+                                            //
+                                            //       , icon: Icon(Icons.add));
+                                            // });
+
+
+
+
+
+
+
+                                          } ,child: Text("View All",style: TextStyle(color: Colors.purple.shade400),)),
 
 
 
@@ -319,7 +197,7 @@ class _user_listState extends State<user_list> {
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(top: 100)),
+
 
 
                 ],
@@ -329,5 +207,10 @@ class _user_listState extends State<user_list> {
         ),
       ) ,
     );
+  }
+}
+Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
   }
 }

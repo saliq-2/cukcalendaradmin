@@ -69,7 +69,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Calendar')),
+      appBar: AppBar(
+          backgroundColor: Colors.green,
+          title: Center(child: Image.asset("assets/year.png",height: 50,)),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 3),
+          child: Image.asset("assets/cuklogo.png"),
+        ),
+
+
+
+      ),
       body: Column(
         children: [
           Card(
@@ -109,13 +119,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 rowDecoration: BoxDecoration(border: Border(top: BorderSide(width: 1, color: Colors.green))),
                 weekendTextStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 selectedDecoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
+
+
+
+
+                markerDecoration: BoxDecoration(
+                  color: Colors.red
+                ),
+
+
+
               ),
             ),
           ),
           Text("*Muslim Holidays are subject to the appearance of the moon"),
           ..._getEventsForTheDay(_selectedDay).map(
                 (event) => EventItem(
+
               event: event,
+
+
 
             ),
           ),
@@ -125,6 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 DateTime day = _events.keys.elementAt(index);
                 List<Event> eventsForTheDay = _events[day] ?? [];
+
                 return ExpansionTile(
                   title: Text(
                     "${day.day}/${day.month}/${day.year}",
